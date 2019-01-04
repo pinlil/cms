@@ -151,6 +151,8 @@ INSTALLED_APPS = (
     'markdown_deux',  # Required for Knowledgebase item formatting
     'bootstrapform', # Required for nicer formatting of forms with the default templates
     'helpdesk',  # This is us!
+    'sorl.thumbnail',
+    'newsletter',
 )
 
 LANGUAGES = (
