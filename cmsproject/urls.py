@@ -9,6 +9,7 @@ from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.static import serve
+import spirit.urls
 
 admin.autodiscover()
 
@@ -22,6 +23,7 @@ urlpatterns += i18n_patterns(
     url(r'helpdesk/', include('helpdesk.urls')),
     url(r'^newsletter/', include('newsletter.urls')),
     url(r'^admin/', include(admin.site.urls)),  # NOQA
+    url(r'^forum/', include(spirit.urls)),
     url(r'^', include('cms.urls')),
 )
 

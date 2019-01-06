@@ -86,7 +86,8 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'sekizai.context_processors.sekizai',
                 'django.template.context_processors.static',
-                'cms.context_processors.cms_settings'
+                'cms.context_processors.cms_settings',
+                'djconfig.context_processors.config',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
@@ -110,7 +111,13 @@ MIDDLEWARE = (
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
-    'cms.middleware.language.LanguageCookieMiddleware'
+    'cms.middleware.language.LanguageCookieMiddleware',
+    'spirit.user.middleware.TimezoneMiddleware',
+    'spirit.user.middleware.LastIPMiddleware',
+    'spirit.user.middleware.LastSeenMiddleware',
+    'spirit.user.middleware.ActiveUserMiddleware',
+    'spirit.core.middleware.PrivateForumMiddleware',
+    'djconfig.middleware.DjConfigMiddleware',
 )
 
 INSTALLED_APPS = (
@@ -153,6 +160,35 @@ INSTALLED_APPS = (
     'helpdesk',  # This is us!
     'sorl.thumbnail',
     'newsletter',
+        'spirit.core',
+        'spirit.admin',
+        'spirit.search',
+
+        'spirit.user',
+        'spirit.user.admin',
+        'spirit.user.auth',
+
+        'spirit.category',
+        'spirit.category.admin',
+
+        'spirit.topic',
+        'spirit.topic.admin',
+        'spirit.topic.favorite',
+        'spirit.topic.moderate',
+        'spirit.topic.notification',
+        'spirit.topic.private',
+        'spirit.topic.unread',
+
+        'spirit.comment',
+        'spirit.comment.bookmark',
+        'spirit.comment.flag',
+        'spirit.comment.flag.admin',
+        'spirit.comment.history',
+        'spirit.comment.like',
+        'spirit.comment.poll',
+
+        'djconfig',
+        'haystack',
 )
 
 LANGUAGES = (
@@ -213,3 +249,60 @@ THUMBNAIL_PROCESSORS = (
 )
 META_SITE_PROTOCOL = 'http'
 META_USE_SITES = True
+
+
+
+
+
+
+
+
+TEMPLATES[0]['OPTIONS']['debug'] = True
+# TEMPLATES[0]['OPTIONS']['string_if_invalid'] = '\{\{%s\}\}'  # Some Django templates relies on this being the default
+
+ADMINS = (('John', 'john@example.com'), )  # Log email to console when DEBUG = False
+
+# INSTALLED_APPS.extend([
+#    'debug_toolbar',
+# ])
+
+# Database
+# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+AUTHENTICATION_BACKENDS = [
+    'spirit.user.auth.backends.UsernameAuthBackend',
+    'spirit.user.auth.backends.EmailAuthBackend',
+]
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'st_search'),
+    },
+}
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'spirit_cache',
+    },
+    'st_rate_limit': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'spirit_rl_cache',
+        'TIMEOUT': None
+    }
+}
+CACHES.update({
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    },
+    'st_rate_limit': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'spirit_rl_cache',
+        'TIMEOUT': None
+    }
+})
