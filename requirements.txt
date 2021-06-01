@@ -88,7 +88,7 @@ text-unidecode==1.2
 uni-slugify==0.1.4
 unicodecsv==0.14.1
 Unidecode==1.0.22
-urllib3==1.23
+urllib3==1.26.5
 virtualenv==16.1.0
 webencodings==0.5.1
 Whoosh==2.7.4
