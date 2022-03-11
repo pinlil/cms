@@ -66,7 +66,7 @@ numpy==1.15.2
 oauthlib==2.1.0
 olefile==0.45.1
 path.py==10.3.1
-Pillow==5.2.0
+Pillow==9.0.1
 PyJWT==1.6.4
 python-card-me==0.9.3
 python-dateutil==2.7.3
