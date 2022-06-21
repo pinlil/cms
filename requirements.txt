@@ -62,7 +62,7 @@ Markdown==2.6.11
 markdown2==2.3.7
 misago-social-auth-app-django==2.1.0
 mistune==0.7.4
-numpy==1.15.2
+numpy==1.22.0
 oauthlib==2.1.0
 olefile==0.45.1
 path.py==10.3.1
