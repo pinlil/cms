@@ -61,7 +61,7 @@ lxml==4.2.6
 Markdown==2.6.11
 markdown2==2.3.7
 misago-social-auth-app-django==2.1.0
-mistune==0.7.4
+mistune==0.8.1
 numpy==1.15.2
 oauthlib==2.1.0
 olefile==0.45.1
